@@ -8,6 +8,7 @@ dependencies {
 }
 
 checkstyle {
+    ignoreFailures = true
     toolVersion "8.12"
     checkstyleTest.enabled = false
     configFile = new File(rootDir, "config/checkstyle.xml")
