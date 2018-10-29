@@ -270,11 +270,25 @@ public class Transform {
     }
     /**
      * @param inputArray is the image we are going to shrink vertical.
-     * @param expandVertical is the factor that the height will be expanding by.
+     * @param amount is the factor that the height will be expanding by.
      * @return dumOut temp return.
      */
-    public static RGBAPixel[][] expandVertical(final RGBAPixel[][] inputArray, final int expandVertical) {
-        return dumOut;
+    public static RGBAPixel[][] expandVertical(final RGBAPixel[][] inputArray, final int amount) {
+        RGBAPixel[][] out = new RGBAPixel[inputArray.length][inputArray[0].length * amount];
+        for (int i = 0; i < out.length; i++) {
+            for (int j = 0; j < out[0].length; j = j + amount) {
+                for (int k = 0; k < amount; k++) {
+                    out[i][j + k] =  inputArray[i][j / amount];
+                }
+            }
+        }
+        RGBAPixel[][] out1 = new RGBAPixel[inputArray.length][inputArray[0].length];
+        for (int i = 0; i < inputArray.length; i++) {
+            for (int j = 0; j < inputArray[0].length; j++) {
+                out1[i][j] = out[i][j + (inputArray[0].length * (amount - 1)) / 2];
+            }
+        }
+        return out1;
     }
     /**
      * @param originalImage is the image we are going to shrink horizontally.
@@ -290,7 +304,21 @@ public class Transform {
      * @return dumOut temp return.
      */
     public static RGBAPixel[][] expandHorizontal(final RGBAPixel[][] originalImage, final int amount) {
-        return dumOut;
+        RGBAPixel[][] out = new RGBAPixel[originalImage.length * amount][originalImage[0].length];
+        for (int i = 0; i < out[0].length; i++) {
+            for (int j = 0; j < out.length; j = j + amount) {
+                for (int k = 0; k < amount; k++) {
+                    out[j + k][i] =  originalImage[j / amount][i];
+                }
+            }
+        }
+        RGBAPixel[][] out1 = new RGBAPixel[originalImage.length][originalImage[0].length];
+        for (int i = 0; i < originalImage[0].length; i++) {
+            for (int j = 0; j < originalImage.length; j++) {
+                out1[j][i] = out[j + (originalImage.length * (amount - 1)) / 2][i];
+            }
+        }
+        return out1;
     }
     /**
      * @param originalImage is the image we are removing a green screen mask from.
