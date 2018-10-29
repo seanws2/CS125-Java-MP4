@@ -117,28 +117,148 @@ public class Transform {
      * @return dumOut temp return.
      */
     public static RGBAPixel[][] rotateLeft(final RGBAPixel[][] originalImage) {
-        return dumOut;
+        int picWidth = originalImage.length;
+        int picHeight = originalImage[0].length;
+        int offFill = (picHeight - picWidth) / 2;
+        RGBAPixel[][] out = new RGBAPixel[picHeight][picWidth];
+        if (offFill > 0) {
+            for (int i = 0; i < picWidth; i++) {
+                RGBAPixel[] temp = new RGBAPixel[picWidth];
+                int tempCount = 0;
+                for (int j = offFill; j < picHeight - offFill; j++) {
+                    temp[tempCount] = originalImage[i][j];
+                    tempCount++;
+                }
+                for (int h = 0; h < picWidth; h++) {
+                    out[picHeight - 1 - i - offFill][h] = temp[h];
+                }
+            }
+        } else {
+            offFill *= -1;
+            for (int i = 0; i < picHeight; i++) {
+                RGBAPixel[] temp = new RGBAPixel[picHeight];
+                int tempCount = 0;
+                for (int j = offFill; j < picWidth - offFill; j++) {
+                    temp[tempCount] = originalImage[j][i];
+                    tempCount++;
+                }
+                tempCount = 0;
+                for (int h = picHeight - 1; h >= 0; h--) {
+                    out[h][offFill + i] = temp[tempCount];
+                    tempCount++;
+                }
+            }
+        }
+        for (int i = 0; i < picHeight; i++) {
+            for (int j = 0; j < picWidth; j++) {
+                if (out[i][j] == null) {
+                    out[i][j] = FILL_VALUE;
+                }
+            }
+        }
+        RGBAPixel[][] out1 = new RGBAPixel[picWidth][picHeight];
+        for (int i = 0; i < picWidth; i++) {
+            for (int j = 0; j < picHeight; j++) {
+                out1[i][j] = out[j][i];
+            }
+        }
+        return out1;
     }
     /**
      * @param originalImage is the image we are going to rotate 90 degrees to the right.
      * @return dumOut temp return.
      */
     public static RGBAPixel[][] rotateRight(final RGBAPixel[][] originalImage) {
-        return dumOut;
+        int picWidth = originalImage.length;
+        int picHeight = originalImage[0].length;
+        int offFill = (picHeight - picWidth) / 2;
+        RGBAPixel[][] out = new RGBAPixel[picHeight][picWidth];
+        if (offFill > 0) {
+            for (int i = 0; i < picWidth; i++) {
+                RGBAPixel[] temp = new RGBAPixel[picWidth];
+                int tempCount = 0;
+                for (int j = offFill; j < picHeight - offFill; j++) {
+                    temp[tempCount] = originalImage[i][j];
+                    tempCount++;
+                }
+                for (int h = 0; h < picWidth; h++) {
+                    out[offFill + i][picWidth - 1 - h] = temp[h];
+                }
+            }
+        } else {
+            offFill *= -1;
+            for (int i = 0; i < picHeight; i++) {
+                RGBAPixel[] temp = new RGBAPixel[picHeight];
+                int tempCount = 0;
+                for (int j = offFill; j < picWidth - offFill; j++) {
+                    temp[tempCount] = originalImage[j][i];
+                    tempCount++;
+                }
+                tempCount = 0;
+                for (int h = 0; h < picHeight; h++) {
+                    out[h][picWidth - offFill - 1 - i] = temp[tempCount];
+                    tempCount++;
+                }
+            }
+        }
+        for (int i = 0; i < picHeight; i++) {
+            for (int j = 0; j < picWidth; j++) {
+                if (out[i][j] == null) {
+                    out[i][j] = FILL_VALUE;
+                }
+            }
+        }
+        RGBAPixel[][] out1 = new RGBAPixel[picWidth][picHeight];
+        for (int i = 0; i < picWidth; i++) {
+            for (int j = 0; j < picHeight; j++) {
+                out1[i][j] = out[j][i];
+            }
+        }
+        return out1;
     }
     /**
      * @param originalImage is the image we are going to flip vertically.
      * @return dumOut temp return.
      */
     public static RGBAPixel[][] flipVertical(final RGBAPixel[][] originalImage) {
-        return dumOut;
+        int picWidth = originalImage.length;
+        int picHeight = originalImage[0].length;
+        int offFill = (picHeight - picWidth) / 2;
+        RGBAPixel[][] out = new RGBAPixel[picHeight][picWidth];
+        for (int i = 0; i < picWidth; i++) {
+            for (int j = 0; j < picHeight; j++) {
+                out[j][i] = originalImage[i][picHeight - j - 1];
+            }
+        }
+        RGBAPixel[][] out1 = new RGBAPixel[picWidth][picHeight];
+        for (int i = 0; i < picWidth; i++) {
+            for (int j = 0; j < picHeight; j++) {
+                out1[i][j] = out[j][i];
+            }
+        }
+        return out1;
     }
     /**
      * @param originalImage is the image we are going to flip horizontally.
      * @return dumOut temp return.
      */
     public static RGBAPixel[][] flipHorizontal(final RGBAPixel[][] originalImage) {
-        return dumOut;
+        int picWidth = originalImage.length;
+        int picHeight = originalImage[0].length;
+        int offFill = (picHeight - picWidth) / 2;
+        RGBAPixel[][] out = new RGBAPixel[picHeight][picWidth];
+        for (int i = 0; i < picHeight; i++) {
+            for (int j = 0; j < picWidth; j++) {
+                out[i][j] = originalImage[picWidth - j - 1][i];
+            }
+        }
+        RGBAPixel[][] out1 = new RGBAPixel[picWidth][picHeight];
+        for (int i = 0; i < picWidth; i++) {
+            for (int j = 0; j < picHeight; j++) {
+                out1[i][j] = out[j][i];
+            }
+        }
+        return out1;
     }
     /**
      * @param originalImage is the image we are going to shrink vertical.
